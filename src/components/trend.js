@@ -1,6 +1,6 @@
 import Path from './path'
 import Gradient from './gradient'
-import VerticalAxis from './vertical'
+import VerticalAxis from './vartical'
 
 export default {
   name: 'Trend',
@@ -95,6 +95,9 @@ export default {
 
     props.boundary = boundary
     props.id = 'vue-trend-' + this._uid
+    props.height = height
+    props.width = width
+
     // https://jp.vuejs.org/v2/guide/render-function.html
     // ここにrenderのこと書いてある。
     return h(
@@ -112,6 +115,9 @@ export default {
         h(Path, {
           props,
           ref: 'path'
+        }),
+        h(VerticalAxis, {
+          props
         })
       ]
     )

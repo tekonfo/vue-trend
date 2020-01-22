@@ -5,6 +5,8 @@
     <trend
       :data="data"
       :gradient="gradient"
+      :height="500"
+      :width="1500"
       auto-draw
       smooth>
     </trend>
