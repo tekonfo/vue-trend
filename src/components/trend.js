@@ -1,6 +1,10 @@
 import Path from './path'
 import Gradient from './gradient'
+<<<<<<< HEAD
 import VerticalAxis from './vartical'
+=======
+import Points from './points'
+>>>>>>> 705440ac971549ca77305a75e7827eca0d908940
 
 export default {
   name: 'Trend',
@@ -116,7 +120,11 @@ export default {
           props,
           ref: 'path'
         }),
+<<<<<<< HEAD
         h(VerticalAxis, {
+=======
+        h(Points, {
+>>>>>>> 705440ac971549ca77305a75e7827eca0d908940
           props
         })
       ]
