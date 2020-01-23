@@ -1,13 +1,13 @@
 import Path from './path'
 import Gradient from './gradient'
 import VerticalAxis from './vartical'
-import Points from './points'
+import Points from './points.vue'
 
 export default {
   name: 'Trend',
 
   props: {
-    data: {
+    value: {
       type: Array,
       required: true
     },
@@ -50,7 +50,7 @@ export default {
   },
 
   watch: {
-    data: {
+    value: {
       immediate: true,
       handler (val) {
         this.$nextTick(() => {
@@ -78,7 +78,7 @@ export default {
   },
 
   render (h) {
-    if (!this.data || this.data.length < 2) return
+    if (!this.value || this.value.length < 2) return
     const {
       width,
       height,
