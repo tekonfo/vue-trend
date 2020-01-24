@@ -40,12 +40,14 @@ export default {
     width: Number,
     padding: {
       type: Number,
-      default: 8
+      default: 16
     },
     radius: {
       type: Number,
       default: 10
     },
+    isMove: Boolean,
+    selectedId: Number,
     smooth: Boolean
   },
 

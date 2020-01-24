@@ -7,19 +7,18 @@ import { checkCollinear, getDistance, moveTo } from './math'
  * @return {object[]}
  */
 export function genPoints (arr, { minX, minY, maxX, maxY }, { max, min }) {
-  arr = arr.map(item => (typeof item === 'number' ? item : item.value))
-  const minValue = Math.min(...arr, min) - 0.001
-  const gridX = (maxX - minX) / (arr.length - 1)
-  const gridY = (maxY - minY) / (Math.max(...arr, max) + 0.001 - minValue)
+  const arrX = arr.map((value) => { return value.x })
+  const arrY = arr.map((value) => { return value.y })
+  const minValue = Math.min(...arrY, min)
+  const gridX = (maxX - minX) / (Math.max(...arrX, 0))
+  const gridY = (maxY - minY) / (Math.max(...arrY, max) - minValue)
 
-  return arr.map((value, index) => {
+  var x, y
+  return arr.map((value) => {
+    ({ x, y } = value)
     return {
-      x: index * gridX + minX,
-      y:
-        maxY -
-        (value - minValue) * gridY +
-        +(index === arr.length - 1) * 0.00001 -
-        +(index === 0) * 0.00001
+      x: x * gridX + minX,
+      y: maxY - (y - minValue) * gridY
     }
   })
 }

@@ -1,10 +1,8 @@
-import { genPoints, genPath } from '../helpers/path'
-
 export default {
-  props: ['id', 'width', 'height'],
+  props: ['id', 'boundary'],
 
   render (h) {
-    const {id, width, height } = this
+    const { minX, minY, maxX, maxY } = this.boundary
 
     return h(
       'g', {
@@ -16,18 +14,18 @@ export default {
       [
         h('line', {
           attrs: {
-            x1: 5,
-            x2: width,
-            y1: height / 2,
-            y2: height / 2
+            x1: minX,
+            x2: maxX,
+            y1: maxY / 2,
+            y2: maxY / 2
           }
         }),
         h('line', {
           attrs: {
-            x1: 5,
-            x2: 5,
-            y1: 0,
-            y2: height
+            x1: minX,
+            x2: minX,
+            y1: minY,
+            y2: maxY
           }
         }),
         h('text', {
@@ -35,8 +33,8 @@ export default {
             innerHTML: '年齢'
           },
           attrs: {
-            x: width - 40,
-            y: height / 2 + 20
+            x: maxX - 40,
+            y: maxY / 2 + 20
           }
         }),
         h('text', {
@@ -45,8 +43,8 @@ export default {
           },
           attrs: {
             'writing-mode': 'tb',
-            x: 15,
-            y: height / 2
+            x: minX + 8,
+            y: maxY / 2
           }
         })
       ]
