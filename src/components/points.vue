@@ -6,8 +6,17 @@
     r="5" 
     :fill="index===selectedId ? 'red' : 'black'"
     @mousedown="setId($event, index)"
+    @mouseover="showText($event, index)"
+    @mouseleave="closeText($event, index)"
     >
     </circle>
+    <text v-for="(d, index) in points" v-bind:key="'text-' + index" 
+    :x="d.x + 7" 
+    :y="d.y" 
+    fill="black" 
+    v-show="index === showTextId"
+    >{{ d.text }}
+    </text>
   </g>
 </template>
 
@@ -23,6 +32,7 @@
         beforeMouseY: 0,
         isMove: false,
         selectedId: -1,
+        showTextId: -1,
         fill: 'red'
       }
     },
@@ -32,6 +42,14 @@
         console.log('mouseDown')
         this.isMove = true
         this.selectedId = index
+        event.preventDefault()
+      },
+      showText: function (event, index) {
+        this.showTextId = index
+        event.preventDefault()
+      },
+      closeText: function (event, index) {
+        this.showTextId = -1
         event.preventDefault()
       },
       // move中は前回まで動かした差分を取りながら座標を変化させていく

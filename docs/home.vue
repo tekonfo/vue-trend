@@ -31,13 +31,13 @@ export default {
   created () {
     // this.points = [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0]
     this.points = [
-      { x: 0, y: 10 },
-      { x: 1, y: 2 },
-      { x: 5, y: 5 },
-      { x: 10, y: 10 },
-      { x: 15, y: 30 },
-      { x: 20, y: 0 },
-      { x: 23, y: 8 }
+      { x: 0, y: 10, text: '誕生' },
+      { x: 1, y: 2, text: '誕生' },
+      { x: 5, y: 5, text: '誕生' },
+      { x: 10, y: 10, text: '誕生' },
+      { x: 15, y: 30, text: '誕生' },
+      { x: 20, y: 0, text: '誕生' },
+      { x: 23, y: 8, text: '誕生' }
     ]
     this.gradient = ['#6fa8dc', '#42b983', '#2c3e50']
   }

@@ -13,12 +13,13 @@ export function genPoints (arr, { minX, minY, maxX, maxY }, { max, min }) {
   const gridX = (maxX - minX) / (Math.max(...arrX, 0))
   const gridY = (maxY - minY) / (Math.max(...arrY, max) - minValue)
 
-  var x, y
+  var x, y, text
   return arr.map((value) => {
-    ({ x, y } = value)
+    ({ x, y, text } = value)
     return {
       x: x * gridX + minX,
-      y: maxY - (y - minValue) * gridY
+      y: maxY - (y - minValue) * gridY,
+      text: text
     }
   })
 }
