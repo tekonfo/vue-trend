@@ -21,14 +21,11 @@
 </template>
 
 <script>
-  import { genPoints } from '../helpers/path'
-
   export default {
-    props: ['smooth', 'value', 'boundary', 'radius', 'id', 'max', 'min'],
+    props: ['smooth', 'boundary', 'radius', 'id', 'max', 'min', 'points'],
 
     data: function () {
       return {
-        points: [],
         beforeMouseY: 0,
         isMove: false,
         selectedId: -1,
@@ -89,11 +86,11 @@
       console.log('MOUNT LISTENER OFF')
       document.removeEventListener('mouseup', this.mouseUp)
       document.removeEventListener('mousemove', this.move)
-    },
-
-    created: function () {
-      const maxMin = { max: this.max, min: this.min }
-      this.points = genPoints(this.value, this.boundary, maxMin)
     }
   }
 </script>
+
+
+
+
+

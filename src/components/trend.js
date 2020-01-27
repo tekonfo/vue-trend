@@ -2,6 +2,7 @@ import Path from './path'
 import Gradient from './gradient'
 import VerticalAxis from './vartical'
 import Points from './points.vue'
+import { genPoints } from '../helpers/path'
 
 export default {
   name: 'Trend',
@@ -51,14 +52,38 @@ export default {
     smooth: Boolean
   },
 
+  data: function () {
+    return {
+      points: [],
+      boundary: [],
+      viewWidth: 0,
+      viewHeight: 0
+    }
+  },
+
+  created: function () {
+    this.viewWidth = this.width || 300
+    this.viewHeight = this.height || 75
+    this.boundary = {
+      minX: this.padding,
+      minY: this.padding,
+      maxX: this.viewWidth - this.padding,
+      maxY: this.viewHeight - this.padding
+    }
+    const maxMin = { max: this.max, min: this.min }
+    this.points = genPoints(this.value, this.boundary, maxMin)
+  },
+
   watch: {
     value: {
-      immediate: true,
       handler (val) {
         this.$nextTick(() => {
           if (this.$isServer || !this.$refs.path || !this.autoDraw) {
             return
           }
+
+          const maxMin = { max: this.max, min: this.min }
+          this.points = genPoints(this.value, this.boundary, maxMin)
 
           const path = this.$refs.path.$el
           const length = path.getTotalLength()
@@ -83,24 +108,17 @@ export default {
     if (!this.value || this.value.length < 2) return
     const {
       width,
-      height,
-      padding
+      height
     } = this
-    const viewWidth = width || 300
-    const viewHeight = height || 75
-    const boundary = {
-      minX: padding,
-      minY: padding,
-      maxX: viewWidth - padding,
-      maxY: viewHeight - padding
-    }
+
     const props = this.$props
 
-    props.boundary = boundary
+    props.boundary = this.boundary
     props.id = 'vue-trend-' + this._uid
     props.height = height
     props.width = width
-
+    props.points = this.points
+  
     // https://jp.vuejs.org/v2/guide/render-function.html
     // ここにrenderのこと書いてある。
     return h(
@@ -108,7 +126,7 @@ export default {
         attrs: {
           width: width || '100%',
           height: height || '25%',
-          viewBox: `0 0 ${viewWidth} ${viewHeight}`
+          viewBox: `0 0 ${this.viewWidth} ${this.viewHeight}`
         }
       },
       [

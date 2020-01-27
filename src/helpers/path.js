@@ -27,7 +27,12 @@ export function genPoints (arr, { minX, minY, maxX, maxY }, { max, min }) {
 /**
  * From https://github.com/unsplash/react-trend/blob/master/src/helpers/DOM.helpers.js#L18
  */
-export function genPath (points, radius) {
+export function genPath (pts, radius) {
+  // ここそのままshiftしてしまうと親のpointsが変更されてしまうので別の配列を作成している。
+  // こうしないといけないのか？？？
+  var points = pts.filter(function (point) {
+    return point
+  })
   const start = points.shift()
 
   return (
