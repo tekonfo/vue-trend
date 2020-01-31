@@ -1,5 +1,5 @@
 export default {
-  props: ['id', 'boundary'],
+  props: ['id', 'boundary', 'marginL'],
 
   render (h) {
     const { minX, minY, maxX, maxY } = this.boundary
@@ -12,18 +12,21 @@ export default {
         }
       },
       [
+        // 横軸
         h('line', {
           attrs: {
-            x1: minX,
+            x1: minX + this.marginL,
             x2: maxX,
             y1: maxY / 2,
-            y2: maxY / 2
+            y2: maxY / 2,
+            'stroke-dasharray': 10
           }
         }),
+        // 縦軸
         h('line', {
           attrs: {
-            x1: minX,
-            x2: minX,
+            x1: minX + this.marginL,
+            x2: minX + this.marginL,
             y1: minY,
             y2: maxY
           }
@@ -43,8 +46,8 @@ export default {
           },
           attrs: {
             'writing-mode': 'tb',
-            x: minX + 8,
-            y: maxY / 2
+            x: minX,
+            y: maxY / 2 - 50
           }
         })
       ]

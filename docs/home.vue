@@ -5,7 +5,7 @@
     <trend
       :value="points"
       :gradient="gradient"
-      :height="200"
+      :height="500"
       :width="1000"
       :isMove="isMove"
       :selectedId="selecetedId"
@@ -13,23 +13,39 @@
       smooth>
     </trend>
 
-    <footer>Released under the <a href="//github.com/QingWei-Li/vue-trend/blob/master/LICENSE">MIT</a> license. <a href="//github.com/QingWei-Li/vue-trend">View source.</a></footer>
+    <controll
+      :points="points"
+    ></controll>
+
+    一覧
+    <div v-for="point in points" v-bind:key="'input-' + point.x">
+      {{ point.x }}
+      <input v-model="point.text">
+      <button @click="deletePoint(point.x)">削除</button>
+    </div>
+    <input v-model="x">
+    <button @click="addPoint(x)">追加</button>
+
+    <!-- <footer>Released under the <a href="//github.com/QingWei-Li/vue-trend/blob/master/LICENSE">MIT</a> license. <a href="//github.com/QingWei-Li/vue-trend">View source.</a></footer> -->
   </main>
 </template>
 
 <script>
 import Trend from '../src/index'
+import Controll from '../src/components/controll'
 
 export default {
   data: {
+    x: 0,
     isMove: false,
     selecetedId: 0,
     points: [],
     gradient: []
   },
-  components: { Trend },
+  components: { Trend, Controll },
   created () {
-    // this.points = [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0]
+    // x をIDみたいなものにしよう
+    // yの値はemitで伝搬させないといけないなーーー
     this.points = [
       { x: 0, y: 10, text: '誕生' },
       { x: 1, y: 2, text: '誕生' },
@@ -40,6 +56,17 @@ export default {
       { x: 23, y: 8, text: '誕生' }
     ]
     this.gradient = ['#6fa8dc', '#42b983', '#2c3e50']
+  },
+  methods: {
+    deletePoint: function (x) {
+      const index = this.points.findIndex((v) => v.x === x)
+      this.points.splice(index, 1)
+    },
+    addPoint: function (x) {
+      const newPoint = { x: x, y: 0, text: '' }
+      const index = this.points.findIndex((v) => v.x > x)
+      this.points.splice(index, 0, newPoint)
+    }
   }
 }
 </script>

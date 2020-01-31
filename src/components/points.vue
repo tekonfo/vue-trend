@@ -10,6 +10,7 @@
     @mouseleave="closeText($event, index)"
     >
     </circle>
+    
     <text v-for="(d, index) in points" v-bind:key="'text-' + index" 
     :x="d.x + 7" 
     :y="d.y" 
@@ -17,6 +18,15 @@
     v-show="index === showTextId"
     >{{ d.text }}
     </text>
+    
+    <text v-for="(d, index) in points" v-bind:key="'axis-' + index" 
+    :x="d.x" 
+    :y="centerLine" 
+    fill="black" 
+    >{{ d.originX }}
+    </text>
+    
+
   </g>
 </template>
 
@@ -31,6 +41,12 @@
         selectedId: -1,
         showTextId: -1,
         fill: 'red'
+      }
+    },
+
+    computed: {
+      centerLine: function () {
+        return (this.boundary.maxY / 2) + 15
       }
     },
 

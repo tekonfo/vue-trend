@@ -57,7 +57,8 @@ export default {
       points: [],
       boundary: [],
       viewWidth: 0,
-      viewHeight: 0
+      viewHeight: 0,
+      marginL: 30
     }
   },
 
@@ -71,11 +72,30 @@ export default {
       maxY: this.viewHeight - this.padding
     }
     const maxMin = { max: this.max, min: this.min }
-    this.points = genPoints(this.value, this.boundary, maxMin)
+    this.points = genPoints(this.value, this.boundary, maxMin, this.marginL)
+  },
+
+  mounted: function () {
+    const path = this.$refs.path.$el
+    const length = path.getTotalLength()
+
+    path.style.transition = 'none'
+    path.style.strokeDasharray = length + ' ' + length
+    path.style.strokeDashoffset = Math.abs(
+      length - (this.lastLength || 0)
+    )
+    path.getBoundingClientRect()
+    path.style.transition = `stroke-dashoffset ${
+      this.autoDrawDuration
+    }ms ${this.autoDrawEasing}`
+    path.style.strokeDashoffset = 0
+    this.lastLength = length
   },
 
   watch: {
     value: {
+      immediate: true,
+      deep: true,
       handler (val) {
         this.$nextTick(() => {
           if (this.$isServer || !this.$refs.path || !this.autoDraw) {
@@ -83,22 +103,7 @@ export default {
           }
 
           const maxMin = { max: this.max, min: this.min }
-          this.points = genPoints(this.value, this.boundary, maxMin)
-
-          const path = this.$refs.path.$el
-          const length = path.getTotalLength()
-
-          path.style.transition = 'none'
-          path.style.strokeDasharray = length + ' ' + length
-          path.style.strokeDashoffset = Math.abs(
-            length - (this.lastLength || 0)
-          )
-          path.getBoundingClientRect()
-          path.style.transition = `stroke-dashoffset ${
-            this.autoDrawDuration
-          }ms ${this.autoDrawEasing}`
-          path.style.strokeDashoffset = 0
-          this.lastLength = length
+          this.points = genPoints(this.value, this.boundary, maxMin, this.marginL)
         })
       }
     }
@@ -118,7 +123,8 @@ export default {
     props.height = height
     props.width = width
     props.points = this.points
-  
+    props.marginL = this.marginL
+
     // https://jp.vuejs.org/v2/guide/render-function.html
     // ここにrenderのこと書いてある。
     return h(
