@@ -10,7 +10,7 @@ export function genPoints (arr, { minX, minY, maxX, maxY }, { max, min }, margin
   const arrX = arr.map((value) => { return value.x })
   const arrY = arr.map((value) => { return value.y })
   const minValue = Math.min(...arrY, min)
-  const gridX = (maxX - minX) / (Math.max(...arrX, 0))
+  const gridX = (maxX - marginL - minX) / (Math.max(...arrX, 0))
   const gridY = (maxY - minY) / (Math.max(...arrY, max) - minValue)
 
   var x, y, text

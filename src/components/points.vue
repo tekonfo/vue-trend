@@ -12,16 +12,18 @@
     </circle>
     
     <text v-for="(d, index) in points" v-bind:key="'text-' + index" 
-    :x="d.x + 7" 
+    :x="d.x" 
     :y="d.y" 
-    fill="black" 
+    fill="black"  
     v-show="index === showTextId"
     >{{ d.text }}
     </text>
     
     <text v-for="(d, index) in points" v-bind:key="'axis-' + index" 
-    :x="d.x" 
-    :y="centerLine" 
+    :x="d.x"
+    :y="centerLine + 5"
+    dominant-baseline="hanging"
+    text-anchor="middle" 
     fill="black" 
     >{{ d.originX }}
     </text>
@@ -46,7 +48,7 @@
 
     computed: {
       centerLine: function () {
-        return (this.boundary.maxY / 2) + 15
+        return (this.boundary.maxY / 2)
       }
     },
 

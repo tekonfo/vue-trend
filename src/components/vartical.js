@@ -16,7 +16,7 @@ export default {
         h('line', {
           attrs: {
             x1: minX + this.marginL,
-            x2: maxX,
+            x2: maxX + this.marginL,
             y1: maxY / 2,
             y2: maxY / 2,
             'stroke-dasharray': 10
@@ -36,7 +36,7 @@ export default {
             innerHTML: '年齢'
           },
           attrs: {
-            x: maxX - 40,
+            x: maxX + this.marginL,
             y: maxY / 2 + 20
           }
         }),

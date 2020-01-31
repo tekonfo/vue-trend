@@ -58,12 +58,13 @@ export default {
       boundary: [],
       viewWidth: 0,
       viewHeight: 0,
-      marginL: 30
+      marginL: 30,
+      marginR: 30
     }
   },
 
   created: function () {
-    this.viewWidth = this.width || 300
+    this.viewWidth = this.width + this.marginL + this.marginR || 300
     this.viewHeight = this.height || 75
     this.boundary = {
       minX: this.padding,
@@ -130,7 +131,7 @@ export default {
     return h(
       'svg', {
         attrs: {
-          width: width || '100%',
+          width: width + this.marginL || '100%',
           height: height || '25%',
           viewBox: `0 0 ${this.viewWidth} ${this.viewHeight}`
         }
